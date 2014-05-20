@@ -15,12 +15,25 @@ __version__ = '1.1.0'
 from docopt import docopt
 import cPickle as cp
 import urllib2
+import sys
 
 def main(args):
     print args
-
+    if args['--update']:
+        get_updates()
+    if args['--address']:
+        find_info(args['--address'])
 def get_updates():
-    pass
+    url_lines = []
+    try:
+        request = urllib2.urlopen('http://standards.ieee.org/develop/regauth'
+                    '/oui/oui.txt')
+        url_lines = request.readlines()
+    except:
+        print >> sys.stderr, 'Unable to connect to the url.'
+    if url_lines:
+        
+        print len(url_lines)
 
 def find_info(mac_address):
     pass
